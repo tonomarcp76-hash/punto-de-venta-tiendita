@@ -5,259 +5,116 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Punto de Venta - Tiendita</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
-        body { background-color: #f5f6f8; }
+        * {margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif;}
+        body {background-color: #f5f6f8;}
 
         /* === PANTALLA DE INICIO DE SESIÓN === */
         .login-container {
-            max-width: 420px;
-            margin: 80px auto;
-            background: white;
-            padding: 35px;
-            border-radius: 10px;
+            max-width: 420px; margin: 80px auto; background: white;
+            padding: 35px; border-radius: 10px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
-        .login-container h2 {
-            text-align: center;
-            color: #1564c0;
-            margin-bottom: 25px;
-        }
-        .login-container h3 {
-            text-align: center;
-            color: #334155;
-            margin-bottom: 15px;
-            font-size: 17px;
-        }
-        .input-group { margin-bottom: 18px; }
-        .input-group label {
-            display: block;
-            margin-bottom: 6px;
-            color: #475569;
-            font-weight: 500;
-        }
+        .login-container h2 {text-align: center; color: #1564c0; margin-bottom: 25px;}
+        .login-container h3 {text-align: center; color: #334155; margin-bottom: 15px; font-size: 17px;}
+        .input-group {margin-bottom: 18px;}
+        .input-group label {display: block; margin-bottom: 6px; color: #475569; font-weight: 500;}
         .input-group input {
-            width: 100%;
-            padding: 11px;
-            border: 1px solid #cbd5e1;
-            border-radius: 5px;
-            font-size: 15px;
+            width: 100%; padding: 11px; border: 1px solid #cbd5e1;
+            border-radius: 5px; font-size: 15px;
         }
-        .input-group input:focus {
-            outline: none;
-            border-color: #1564c0;
-        }
+        .input-group input:focus {outline: none; border-color: #1564c0;}
         .btn {
-            width: 100%;
-            padding: 11px;
-            border: none;
-            border-radius: 5px;
-            font-size: 15px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 8px;
+            width: 100%; padding: 11px; border: none; border-radius: 5px;
+            font-size: 15px; font-weight: bold; cursor: pointer; margin-top: 8px;
         }
-        .btn-primary {
-            background-color: #1564c0;
-            color: white;
-        }
-        .btn-primary:hover { background-color: #1d4ed8; }
-        .link {
-            text-align: center;
-            margin-top: 15px;
-            font-size: 14px;
-            color: #1564c0;
-            cursor: pointer;
-        }
-        .link:hover { text-decoration: underline; }
+        .btn-primary {background-color: #1564c0; color: white;}
+        .btn-primary:hover {background-color: #1d4ed8;}
+        .link {text-align: center; margin-top: 15px; font-size: 14px; color: #1564c0; cursor: pointer;}
+        .link:hover {text-decoration: underline;}
         .error {
-            background-color: #fee2e2;
-            color: #b91c1c;
-            padding: 10px;
-            border-radius: 5px;
-            margin-bottom: 15px;
-            display: none;
+            background-color: #fee2e2; color: #b91c1c; padding: 10px;
+            border-radius: 5px; margin-bottom: 15px; display: none;
         }
         .success {
-            background-color: #dcfce7;
-            color: #166534;
-            padding: 10px;
-            border-radius: 5px;
-            margin-bottom: 15px;
-            display: none;
+            background-color: #dcfce7; color: #166534; padding: 10px;
+            border-radius: 5px; margin-bottom: 15px; display: none;
         }
-        .hidden { display: none !important; }
+        .hidden {display: none !important;}
 
-        /* === INTERFAZ DEL SISTEMA === */
+        /* === SISTEMA PRINCIPAL === */
         .header {
-            background-color: #1564c0;
-            color: white;
-            padding: 12px 25px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 22px;
-            font-weight: bold;
+            background-color: #1564c0; color: white; padding: 12px 25px;
+            display: flex; justify-content: space-between; align-items: center;
+            font-size: 22px; font-weight: bold;
         }
-        .user-area {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            font-size: 15px;
-            font-weight: normal;
-        }
+        .user-area {display: flex; align-items: center; gap: 15px; font-size: 15px; font-weight: normal;}
         .btn-logout {
-            background-color: #e63946;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
+            background-color: #e63946; color: white; border: none;
+            padding: 8px 16px; border-radius: 4px; cursor: pointer; font-weight: bold;
         }
-        .btn-logout:hover { background-color: #c1121f; }
+        .btn-logout:hover {background-color: #c1121f;}
         .nav-bar {
-            background-color: white;
-            border-bottom: 1px solid #ddd;
-            padding: 10px 25px;
-            display: flex;
-            gap: 30px;
-            flex-wrap: wrap;
+            background-color: white; border-bottom: 1px solid #ddd; padding: 10px 25px;
+            display: flex; gap: 30px; flex-wrap: wrap;
         }
-        .nav-item {
-            padding: 8px 12px;
-            cursor: pointer;
-            color: #555;
-            border-bottom: 3px solid transparent;
-        }
-        .nav-item.active {
-            border-bottom: 3px solid #1564c0;
-            color: #1564c0;
-            font-weight: bold;
-        }
-        .container {
-            padding: 25px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .page { display: none; }
-        .page.active { display: block; }
+        .nav-item {padding: 8px 12px; cursor: pointer; color: #555; border-bottom: 3px solid transparent;}
+        .nav-item.active {border-bottom: 3px solid #1564c0; color: #1564c0; font-weight: bold;}
+        .container {padding: 25px; max-width: 1200px; margin: 0 auto;}
+        .page {display: none;}
+        .page.active {display: block;}
         .btn-small {
-            padding: 8px 14px;
-            border: none;
-            border-radius: 4px;
-            color: white;
-            font-size: 14px;
-            cursor: pointer;
-            font-weight: bold;
-            margin-right: 8px;
-            margin-bottom: 8px;
+            padding: 8px 14px; border: none; border-radius: 4px; color: white;
+            font-size: 14px; cursor: pointer; font-weight: bold; margin-right: 8px; margin-bottom: 8px;
         }
-        .btn-blue { background-color: #2563eb; }
-        .btn-blue:hover { background-color: #1d4ed8; }
-        .btn-orange { background-color: #f97316; }
-        .btn-orange:hover { background-color: #ea580c; }
-        .btn-red { background-color: #dc2626; }
-        .btn-red:hover { background-color: #b91c1c; }
-        .btn-dark { background-color: #374151; }
-        .btn-dark:hover { background-color: #1f2937; }
+        .btn-blue {background-color: #2563eb;}
+        .btn-blue:hover {background-color: #1d4ed8;}
+        .btn-orange {background-color: #f97316;}
+        .btn-orange:hover {background-color: #ea580c;}
+        .btn-red {background-color: #dc2626;}
+        .btn-red:hover {background-color: #b91c1c;}
+        .btn-dark {background-color: #374151;}
+        .btn-dark:hover {background-color: #1f2937;}
         table {
-            width: 100%;
-            border-collapse: collapse;
-            background-color: white;
-            border-radius: 6px;
-            overflow: hidden;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            width: 100%; border-collapse: collapse; background-color: white;
+            border-radius: 6px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
-        th, td {
-            padding: 14px 12px;
-            text-align: left;
-            border-bottom: 1px solid #eee;
-        }
-        th {
-            background-color: #f8fafc;
-            font-weight: bold;
-            color: #334155;
-            font-size: 14px;
-        }
-        .empty-row {
-            text-align: center;
-            padding: 40px;
-            color: #94a3b8;
-        }
-        .content-wrapper {
-            display: flex;
-            gap: 25px;
-            margin-top: 25px;
-            flex-wrap: wrap;
-        }
+        th, td {padding: 14px 12px; text-align: left; border-bottom: 1px solid #eee;}
+        th {background-color: #f8fafc; font-weight: bold; color: #334155; font-size: 14px;}
+        .empty-row {text-align: center; padding: 40px; color: #94a3b8;}
+        .content-wrapper {display: flex; gap: 25px; margin-top: 25px; flex-wrap: wrap;}
         .payment-section, .summary-section {
-            background-color: white;
-            padding: 20px;
-            border-radius: 6px;
+            background-color: white; padding: 20px; border-radius: 6px;
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
-        .payment-section { flex: 1; min-width: 300px; }
-        .summary-section { width: 320px; }
-        h3 {
-            margin-bottom: 15px;
-            color: #334155;
-            font-size: 16px;
-        }
-        .payment-options {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
+        .payment-section {flex: 1; min-width: 300px;}
+        .summary-section {width: 320px;}
+        h3 {margin-bottom: 15px; color: #334155; font-size: 16px;}
+        .payment-options {display: flex; gap: 15px; flex-wrap: wrap;}
         .pay-option {
-            border: 2px solid #ddd;
-            padding: 12px 25px;
-            border-radius: 6px;
-            cursor: pointer;
-            text-align: center;
-            width: 120px;
+            border: 2px solid #ddd; padding: 12px 25px; border-radius: 6px;
+            cursor: pointer; text-align: center; width: 120px;
         }
         .pay-option.selected {
-            border-color: #2563eb;
-            background-color: #eff6ff;
-            color: #1d4ed8;
-            font-weight: bold;
+            border-color: #2563eb; background-color: #eff6ff;
+            color: #1d4ed8; font-weight: bold;
         }
-        .pay-option span {
-            display: block;
-            font-size: 12px;
-            margin-top: 5px;
-        }
-        .summary-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            font-size: 14px;
-        }
+        .pay-option span {display: block; font-size: 12px; margin-top: 5px;}
+        .summary-row {display: flex; justify-content: space-between; padding: 8px 0; font-size: 14px;}
         .total-row {
-            font-size: 22px;
-            font-weight: bold;
-            color: #16a34a;
-            border-top: 1px solid #eee;
-            margin-top: 10px;
-            padding-top: 15px;
+            font-size: 22px; font-weight: bold; color: #16a34a; border-top: 1px solid #eee;
+            margin-top: 10px; padding-top: 15px;
         }
         .contenido-pagina {
-            background: white;
-            padding: 30px;
-            border-radius: 6px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            margin-top: 20px;
+            background: white; padding: 30px; border-radius: 6px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-top: 20px;
         }
     </style>
 </head>
 <body>
 
-    <!-- PANTALLA DE INICIO DE SESIÓN -->
+    <!-- ======================================
+        PANTALLA DE INICIO DE SESIÓN
+    ====================================== -->
     <div id="pantallaLogin">
         <div class="login-container">
             <h2>🛒 PUNTO DE VENTA</h2>
@@ -265,7 +122,7 @@
             <div id="cajaError" class="error"></div>
             <div id="cajaExito" class="success"></div>
             
-            <!-- FORMULARIO DE INICIO DE SESIÓN -->
+            <!-- INICIAR SESIÓN -->
             <div id="formLogin">
                 <h3>Iniciar Sesión</h3>
                 <div class="input-group">
@@ -280,7 +137,7 @@
                 <div class="link" onclick="mostrarRegistro()">¿No tienes cuenta? Regístrate aquí</div>
             </div>
 
-            <!-- FORMULARIO DE REGISTRO -->
+            <!-- REGISTRARSE -->
             <div id="formRegistro" class="hidden">
                 <h3>Registrar Nuevo Usuario</h3>
                 <div class="input-group">
@@ -301,7 +158,9 @@
         </div>
     </div>
 
-    <!-- SISTEMA PRINCIPAL -->
+    <!-- ======================================
+        SISTEMA PRINCIPAL
+    ====================================== -->
     <div id="sistemaPrincipal" class="hidden">
         <div class="header">
             <span>PUNTO DE VENTA</span>
@@ -408,4 +267,39 @@
 
             <!-- CIERRE DE CAJA -->
             <div id="cierre" class="page">
-                <div class="contenido
+                <div class="contenido-pagina">
+                    <h2>💰 Cierre de Caja</h2><br>
+                    <p><strong>Fecha:</strong> <span id="fechaHoy"></span></p>
+                    <p><strong>Saldo Inicial:</strong> $0.00</p>
+                    <p><strong>Ventas del Día:</strong> $0.00</p>
+                    <p><strong>Saldo Final:</strong> $0.00</p><br>
+                    <button class="btn-small btn-red">🔒 Realizar Cierre de Caja</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ==================== DATOS DEL SISTEMA ====================
+        let usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
+        let usuarioActivo = null;
+        let productos = JSON.parse(localStorage.getItem('productos')) || [];
+        let carrito = [];
+        let formaPago = 'efectivo';
+
+        // ==================== PANTALLA DE LOGIN/REGISTRO ====================
+        function mostrarRegistro() {
+            document.getElementById('formLogin').classList.add('hidden');
+            document.getElementById('formRegistro').classList.remove('hidden');
+            ocultarMensajes();
+        }
+        function mostrarLogin() {
+            document.getElementById('formRegistro').classList.add('hidden');
+            document.getElementById('formLogin').classList.remove('hidden');
+            ocultarMensajes();
+        }
+        function mostrarError(texto) {
+            const caja = document.getElementById('cajaError');
+            caja.textContent = texto;
+            caja.style.display = 'block';
+            setTimeout(() => caja.style.display =
