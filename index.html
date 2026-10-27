@@ -66,11 +66,6 @@
             color: white;
         }
         .btn-primary:hover { background-color: #1d4ed8; }
-        .btn-secondary {
-            background-color: #e2e8f0;
-            color: #334155;
-        }
-        .btn-secondary:hover { background-color: #cbd5e1; }
         .link {
             text-align: center;
             margin-top: 15px;
@@ -170,8 +165,6 @@
         .btn-red:hover { background-color: #b91c1c; }
         .btn-dark { background-color: #374151; }
         .btn-dark:hover { background-color: #1f2937; }
-        .btn-sm-red { background-color: #ef4444; }
-        .btn-sm-red:hover { background-color: #dc2626; }
         table {
             width: 100%;
             border-collapse: collapse;
@@ -264,9 +257,7 @@
 </head>
 <body>
 
-    <!-- ======================================
-        PANTALLA DE INICIO DE SESIÓN
-    ====================================== -->
+    <!-- PANTALLA DE INICIO DE SESIÓN -->
     <div id="pantallaLogin">
         <div class="login-container">
             <h2>🛒 PUNTO DE VENTA</h2>
@@ -310,9 +301,7 @@
         </div>
     </div>
 
-    <!-- ======================================
-        SISTEMA PRINCIPAL
-    ====================================== -->
+    <!-- SISTEMA PRINCIPAL -->
     <div id="sistemaPrincipal" class="hidden">
         <div class="header">
             <span>PUNTO DE VENTA</span>
@@ -410,4 +399,13 @@
             <div id="reportes" class="page">
                 <div class="contenido-pagina">
                     <h2>📊 Reportes</h2><br>
-                    <button class="btn-small btn-blue">📈 Reporte
+                    <button class="btn-small btn-blue">📈 Reporte de Ventas</button>
+                    <button class="btn-small btn-orange">📉 Reporte de Inventario</button>
+                    <button class="btn-small btn-dark">📑 Reporte de Compras</button><br><br>
+                    <p>Selecciona el reporte que deseas consultar.</p>
+                </div>
+            </div>
+
+            <!-- CIERRE DE CAJA -->
+            <div id="cierre" class="page">
+                <div class="contenido
