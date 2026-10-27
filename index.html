@@ -9,8 +9,8 @@
         body{background:#f0f4f8;padding:20px;max-width:1000px;margin:0 auto;}
         h1{text-align:center;background:#2c3e50;color:white;padding:20px;border-radius:8px;margin-bottom:20px;}
         
-        .menu{display:flex;justify-content:center;gap:8px;margin-bottom:20px;flex-wrap:wrap;}
-        .btn-menu{padding:12px 18px;border:none;border-radius:6px;font-size:15px;cursor:pointer;background:#3498db;color:white;transition:all 0.2s;}
+        .menu{display:flex;justify-content:center;gap:10px;margin-bottom:20px;flex-wrap:wrap;}
+        .btn-menu{padding:12px 25px;border:none;border-radius:6px;font-size:16px;cursor:pointer;background:#3498db;color:white;transition:all 0.2s;}
         .btn-menu.activo{background:#27ae60;transform:scale(1.05);}
         .btn-menu:hover{opacity:0.9;}
         
@@ -22,7 +22,6 @@
         .btn-verde{background:#27ae60;color:white;}
         .btn-rojo{background:#e74c3c;color:white;}
         .btn-azul{background:#3498db;color:white;}
-        .btn-naranja{background:#f39c12;color:white;}
         button:hover{opacity:0.85;}
         
         table{width:100%;border-collapse:collapse;margin:15px 0;}
@@ -31,7 +30,6 @@
         
         .total{text-align:right;font-size:24px;font-weight:bold;color:#27ae60;margin-top:15px;}
         .acciones{text-align:center;margin-top:20px;}
-        .vacio{text-align:center;color:#888;padding:30px;}
     </style>
 </head>
 <body>
@@ -39,18 +37,16 @@
     <h1>🛒 MI TIENDITA</h1>
 
     <div class="menu">
-        <button class="btn-menu activo" id="btn-ventas" onclick="mostrarPagina('ventas')">🧾 Ventas</button>
-        <button class="btn-menu" id="btn-productos" onclick="mostrarPagina('productos')">📦 Productos</button>
-        <button class="btn-menu" id="btn-compras" onclick="mostrarPagina('compras')">📥 Compras</button>
-        <button class="btn-menu" id="btn-reportes" onclick="mostrarPagina('reportes')">📊 Reportes</button>
-        <button class="btn-menu" id="btn-cierre" onclick="mostrarPagina('cierre')">🔒 Cierre de Caja</button>
+        <button class="btn-menu activo" id="btn-ventas" onclick="mostrarPagina('ventas')">Nueva Venta</button>
+        <button class="btn-menu" id="btn-productos" onclick="mostrarPagina('productos')">Productos</button>
+        <button class="btn-menu" id="btn-caja" onclick="mostrarPagina('caja')">Caja</button>
     </div>
 
-    <!-- ====== VENTAS ====== -->
+    <!-- ====== PÁGINA VENTAS ====== -->
     <div id="ventas" class="pagina activa">
         <h2>🧾 Nueva Venta</h2>
         <button class="btn-verde" onclick="agregarItem()">➕ Agregar Producto</button>
-        <table>
+        <table id="tablaVenta">
             <thead>
                 <tr><th>Producto</th><th>Cantidad</th><th>Precio</th><th>Subtotal</th><th>Eliminar</th></tr>
             </thead>
@@ -63,117 +59,63 @@
         </div>
     </div>
 
-    <!-- ====== PRODUCTOS ====== -->
+    <!-- ====== PÁGINA PRODUCTOS ====== -->
     <div id="productos" class="pagina">
-        <h2>📦 Inventario de Productos</h2>
+        <h2>📦 Lista de Productos</h2>
         <button class="btn-verde" onclick="agregarProducto()">➕ Nuevo Producto</button>
-        <table>
+        <table id="tablaProductos">
             <thead>
-                <tr><th>Nombre</th><th>Precio Venta</th><th>Stock</th><th>Acciones</th></tr>
+                <tr><th>Nombre</th><th>Precio</th><th>Stock</th><th>Eliminar</th></tr>
             </thead>
             <tbody id="cuerpoProductos"></tbody>
         </table>
     </div>
 
-    <!-- ====== COMPRAS ====== -->
-    <div id="compras" class="pagina">
-        <h2>📥 Compras a Proveedores</h2>
-        <button class="btn-verde" onclick="agregarCompra()">➕ Registrar Compra</button>
-        <table>
-            <thead>
-                <tr><th>Fecha</th><th>Producto</th><th>Cantidad</th><th>Costo Unitario</th><th>Total</th></tr>
-            </thead>
-            <tbody id="cuerpoCompras">
-                <tr><td colspan="5" class="vacio">No hay compras registradas</td></tr>
-            </tbody>
-        </table>
-    </div>
-
-    <!-- ====== REPORTES ====== -->
-    <div id="reportes" class="pagina">
-        <h2>📊 Reportes</h2>
-        <div style="display:grid;gap:15px;margin:20px 0;">
-            <div style="background:#e8f4f8;padding:20px;border-radius:8px;">
-                <h3>💰 Ventas del Día</h3>
-                <p style="font-size:28px;font-weight:bold;color:#27ae60;margin-top:10px;">$<span id="rep-ventasDia">0.00</span></p>
-            </div>
-            <div style="background:#fef4e4;padding:20px;border-radius:8px;">
-                <h3>📈 Total Ventas (Acumulado)</h3>
-                <p style="font-size:28px;font-weight:bold;color:#f39c12;margin-top:10px;">$<span id="rep-totalVentas">0.00</span></p>
-            </div>
-            <div style="background:#eaf8e9;padding:20px;border-radius:8px;">
-                <h3>📦 Productos en Inventario</h3>
-                <p style="font-size:28px;font-weight:bold;color:#27ae60;margin-top:10px;"><span id="rep-totalProductos">0</span></p>
-            </div>
-            <div style="background:#f4e8f8;padding:20px;border-radius:8px;">
-                <h3>📥 Total Compras</h3>
-                <p style="font-size:28px;font-weight:bold;color:#8e44ad;margin-top:10px;">$<span id="rep-totalCompras">0.00</span></p>
-            </div>
-        </div>
-        <div class="acciones">
-            <button class="btn-azul" onclick="actualizarReportes()">🔄 Actualizar</button>
-        </div>
-    </div>
-
-    <!-- ====== CIERRE DE CAJA ====== -->
-    <div id="cierre" class="pagina">
-        <h2>🔒 Cierre de Caja</h2>
-        <div style="font-size:18px;line-height:2.2;">
-            <p><strong>Fecha:</strong> <span id="fecha"></span></p>
-            <p><strong>Ventas realizadas hoy:</strong> <span id="ventasHoy">0</span></p>
-            <p><strong>Total vendido hoy:</strong> $<span id="totalHoy">0.00</span></p>
-            <p><strong>Total en Caja:</strong> $<span id="cajaTotal">0.00</span></p>
-            <hr style="margin:15px 0;border:none;border-top:2px dashed #ddd;">
-            <p style="font-size:20px;"><strong>Saldo Final:</strong> <span style="color:#27ae60;font-weight:bold;font-size:26px;">$<span id="saldoFinal">0.00</span></span></p>
-        </div>
-        <div class="acciones">
-            <button class="btn-naranja" onclick="cerrarParcial()">📌 Cierre Parcial</button>
-            <button class="btn-rojo" onclick="cerrarCajaTotal()">🔒 Cierre Total</button>
-        </div>
+    <!-- ====== PÁGINA CAJA ====== -->
+    <div id="caja" class="pagina">
+        <h2>💰 Caja del Día</h2>
+        <p style="font-size:18px;margin:10px 0;"><strong>Fecha:</strong> <span id="fecha"></span></p>
+        <p style="font-size:18px;margin:10px 0;"><strong>Ventas realizadas:</strong> <span id="cantidadVentas">0</span></p>
+        <p style="font-size:22px;margin-top:20px;"><strong>Total en Caja:</strong> $<span id="totalCaja">0.00</span></p>
+        <br>
+        <button class="btn-rojo" onclick="cerrarCaja()">🔄 Reiniciar Día</button>
     </div>
 
 <script>
-// ===== DATOS =====
+// DATOS
 let productos = JSON.parse(localStorage.getItem('misProductos')) || [];
-let compras = JSON.parse(localStorage.getItem('misCompras')) || [];
 let carrito = [];
 let totalCaja = parseFloat(localStorage.getItem('totalCaja')) || 0;
-let totalVentasAcumulado = parseFloat(localStorage.getItem('totalVentasAcumulado')) || 0;
-let ventasHoy = parseInt(localStorage.getItem('ventasHoy')) || 0;
-let totalVentaDia = parseFloat(localStorage.getItem('totalVentaDia')) || 0;
+let cantidadVentas = parseInt(localStorage.getItem('cantidadVentas')) || 0;
 
-// ===== FECHA =====
+// FECHA
 document.getElementById('fecha').textContent = new Date().toLocaleDateString('es-MX',{
     weekday:'long',year:'numeric',month:'long',day:'numeric'
 });
-
-// ===== INICIALIZAR =====
+actualizarCaja();
 actualizarTablaProductos();
-actualizarTablaCompras();
-actualizarReportes();
-actualizarCierre();
 
-// ===== CAMBIAR PÁGINA =====
+// ✅ FUNCIÓN CORREGIDA PARA CAMBIAR DE PÁGINA
 function mostrarPagina(nombre){
-    document.querySelectorAll('.btn-menu').forEach(b=>b.classList.remove('activo'));
-    document.querySelectorAll('.pagina').forEach(p=>p.classList.remove('activa'));
-    document.getElementById('btn-'+nombre).classList.add('activo');
+    // Quitar activo de todos los botones
+    document.querySelectorAll('.btn-menu').forEach(boton => boton.classList.remove('activo'));
+    // Ocultar todas las páginas
+    document.querySelectorAll('.pagina').forEach(pagina => pagina.classList.remove('activa'));
+    // Activar el botón y la página seleccionada
+    document.getElementById('btn-' + nombre).classList.add('activo');
     document.getElementById(nombre).classList.add('activa');
-    if(nombre==='reportes') actualizarReportes();
-    if(nombre==='cierre') actualizarCierre();
 }
 
-// ====== PRODUCTOS ======
+// AGREGAR PRODUCTO AL CATÁLOGO
 function agregarProducto(){
     let nombre = prompt('Nombre del producto:');
     if(!nombre) return;
     let precio = parseFloat(prompt('Precio de venta:'));
     if(isNaN(precio)||precio<=0){alert('Precio inválido');return;}
-    let costo = parseFloat(prompt('Costo de compra:')) || 0;
-    let stock = parseInt(prompt('Cantidad inicial:'));
+    let stock = parseInt(prompt('Cantidad disponible:'));
     if(isNaN(stock)||stock<0){alert('Cantidad inválida');return;}
     
-    productos.push({nombre,precio,costo,stock});
+    productos.push({nombre,precio,stock});
     guardarProductos();
     actualizarTablaProductos();
 }
@@ -185,88 +127,38 @@ function guardarProductos(){
 function actualizarTablaProductos(){
     let cuerpo = document.getElementById('cuerpoProductos');
     cuerpo.innerHTML='';
-    if(productos.length===0){
-        cuerpo.innerHTML='<tr><td colspan="4" class="vacio">No hay productos registrados</td></tr>';
-        return;
-    }
     productos.forEach((p,i)=>{
         cuerpo.innerHTML += `
             <tr>
                 <td>${p.nombre}</td>
                 <td>$${p.precio.toFixed(2)}</td>
                 <td>${p.stock}</td>
-                <td>
-                    <button class="btn-rojo" onclick="eliminarProducto(${i})">Eliminar</button>
-                </td>
+                <td><button class="btn-rojo" onclick="borrarProducto(${i})">X</button></td>
             </tr>
         `;
     });
 }
 
-function eliminarProducto(i){
-    if(confirm('¿Eliminar este producto?')){
+function borrarProducto(i){
+    if(confirm('¿Eliminar producto?')){
         productos.splice(i,1);
         guardarProductos();
         actualizarTablaProductos();
     }
 }
 
-// ====== COMPRAS ======
-function agregarCompra(){
-    if(productos.length===0){alert('Primero registra productos');return;}
-    let lista = productos.map((p,i)=>`${i+1}. ${p.nombre}`).join('\n');
-    let idx = parseInt(prompt('Producto:\n'+lista))-1;
-    if(isNaN(idx)||idx<0||idx>=productos.length) return;
-    
-    let cant = parseInt(prompt('Cantidad comprada:'));
-    if(isNaN(cant)||cant<=0){alert('Cantidad inválida');return;}
-    let costo = parseFloat(prompt('Costo unitario:'));
-    if(isNaN(costo)||costo<=0){alert('Costo inválido');return;}
-    
-    productos[idx].stock += cant;
-    guardarProductos();
-    
-    let fecha = new Date().toLocaleDateString('es-MX');
-    compras.unshift({fecha,nombre:productos[idx].nombre,cantidad,costo,total:cant*costo});
-    localStorage.setItem('misCompras',JSON.stringify(compras));
-    
-    actualizarTablaCompras();
-    actualizarReportes();
-    alert('✅ Compra registrada y stock actualizado');
-}
-
-function actualizarTablaCompras(){
-    let cuerpo = document.getElementById('cuerpoCompras');
-    cuerpo.innerHTML='';
-    if(compras.length===0){
-        cuerpo.innerHTML='<tr><td colspan="5" class="vacio">No hay compras registradas</td></tr>';
-        return;
-    }
-    compras.forEach(c=>{
-        cuerpo.innerHTML += `
-            <tr>
-                <td>${c.fecha}</td>
-                <td>${c.nombre}</td>
-                <td>${c.cantidad}</td>
-                <td>$${c.costo.toFixed(2)}</td>
-                <td>$${c.total.toFixed(2)}</td>
-            </tr>
-        `;
-    });
-}
-
-// ====== VENTAS ======
+// AGREGAR A VENTA
 function agregarItem(){
-    if(productos.length===0){alert('Primero registra productos');return;}
+    if(productos.length===0){alert('Primero agrega productos en la pestaña Productos');return;}
     let lista = productos.map((p,i)=>`${i+1}. ${p.nombre} - $${p.precio.toFixed(2)}`).join('\n');
-    let idx = parseInt(prompt('Selecciona producto:\n'+lista))-1;
-    if(isNaN(idx)||idx<0||idx>=productos.length) return;
+    let opcion = parseInt(prompt('Elige el número del producto:\n\n'+lista))-1;
+    if(isNaN(opcion)||opcion<0||opcion>=productos.length) return;
     
     let cant = parseInt(prompt('Cantidad:'));
     if(isNaN(cant)||cant<=0){alert('Cantidad inválida');return;}
-    if(cant>productos[idx].stock){alert('Stock insuficiente');return;}
     
-    carrito.push({nombre:productos[idx].nombre,cantidad,precio:productos[idx].precio,indice:idx});
+    let p = productos[opcion];
+    carrito.push({nombre:p.nombre,cantidad:cant,precio:p.precio});
     actualizarTablaVenta();
 }
 
@@ -275,14 +167,14 @@ function actualizarTablaVenta(){
     cuerpo.innerHTML='';
     let total = 0;
     carrito.forEach((item,i)=>{
-        let subt = item.cantidad * item.precio;
-        total += subt;
+        let subtotal = item.cantidad * item.precio;
+        total += subtotal;
         cuerpo.innerHTML += `
             <tr>
                 <td>${item.nombre}</td>
                 <td>${item.cantidad}</td>
                 <td>$${item.precio.toFixed(2)}</td>
-                <td>$${subt.toFixed(2)}</td>
+                <td>$${subtotal.toFixed(2)}</td>
                 <td><button class="btn-rojo" onclick="quitarItem(${i})">X</button></td>
             </tr>
         `;
@@ -301,70 +193,33 @@ function limpiarVenta(){
 }
 
 function cobrar(){
-    if(carrito.length===0){alert('No hay productos');return;}
-    let total = carrito.reduce((s,i)=>s+i.cantidad*i.precio,0);
-    
-    if(confirm(`Total a pagar: $${total.toFixed(2)}\n¿Confirmar venta?`)){
-        carrito.forEach(item=>{
-            productos[item.indice].stock -= item.cantidad;
-        });
-        guardarProductos();
-        
+    if(carrito.length===0){alert('No hay productos en la venta');return;}
+    let total = carrito.reduce((sum,i)=>sum + i.cantidad*i.precio,0);
+    if(confirm(`Total a pagar: $${total.toFixed(2)}\n\n¿Venta cobrada?`)){
         totalCaja += total;
-        totalVentaDia += total;
-        totalVentasAcumulado += total;
-        ventasHoy++;
-        
+        cantidadVentas++;
         localStorage.setItem('totalCaja',totalCaja);
-        localStorage.setItem('totalVentaDia',totalVentaDia);
-        localStorage.setItem('totalVentasAcumulado',totalVentasAcumulado);
-        localStorage.setItem('ventasHoy',ventasHoy);
-        
+        localStorage.setItem('cantidadVentas',cantidadVentas);
+        actualizarCaja();
         limpiarVenta();
-        actualizarReportes();
-        actualizarCierre();
-        alert('✅ ¡Venta realizada!');
+        alert('✅ ¡Venta registrada!');
     }
 }
 
-// ====== REPORTES ======
-function actualizarReportes(){
-    document.getElementById('rep-ventasDia').textContent = totalVentaDia.toFixed(2);
-    document.getElementById('rep-totalVentas').textContent = totalVentasAcumulado.toFixed(2);
-    document.getElementById('rep-totalProductos').textContent = productos.length;
-    let totalCompras = compras.reduce((s,c)=>s+c.total,0);
-    document.getElementById('rep-totalCompras').textContent = totalCompras.toFixed(2);
+function actualizarCaja(){
+    document.getElementById('totalCaja').textContent = totalCaja.toFixed(2);
+    document.getElementById('cantidadVentas').textContent = cantidadVentas;
 }
 
-// ====== CIERRE DE CAJA ======
-function actualizarCierre(){
-    document.getElementById('ventasHoy').textContent = ventasHoy;
-    document.getElementById('totalHoy').textContent = totalVentaDia.toFixed(2);
-    document.getElementById('cajaTotal').textContent = totalCaja.toFixed(2);
-    document.getElementById('saldoFinal').textContent = totalCaja.toFixed(2);
-}
-
-function cerrarParcial(){
-    if(confirm('¿Realizar cierre PARCIAL?\nSe reinician solo las ventas del día.\nEl dinero se mantiene en caja.')){
-        ventasHoy=0;
-        totalVentaDia=0;
-        localStorage.setItem('ventasHoy','0');
-        localStorage.setItem('totalVentaDia','0');
-        actualizarCierre();
-        actualizarReportes();
-        alert('✅ Cierre parcial realizado');
+function cerrarCaja(){
+    if(confirm('¿Reiniciar caja del día? Se perderá el total acumulado.')){
+        totalCaja=0;
+        cantidadVentas=0;
+        localStorage.setItem('totalCaja','0');
+        localStorage.setItem('cantidadVentas','0');
+        actualizarCaja();
     }
 }
-
-function cerrarCajaTotal(){
-    if(confirm('⚠️ ¿Cierre TOTAL?\nSe reinicia TODO: ventas, caja y reportes.\n¡Esta acción no se puede deshacer!')){
-        if(confirm('¿Estás SEGURO?')){
-            totalCaja=0;
-            totalVentasAcumulado=0;
-            ventasHoy=0;
-            totalVentaDia=0;
-            compras=[];
-            localStorage.clear();
-            actualizarCierre();
-            actualizarReportes();
-            alert('✅ Cierre total realizado. Todo reinici
+</script>
+</body>
+</html>
