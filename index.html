@@ -18,7 +18,7 @@
 
         /* ===== ENCABEZADO ===== */
         .header {
-            background: linear-gradient(90deg, #ff6b6b, #feca57);
+            background: linear-gradient(90deg, #e74c3c, #f39c12);
             color: white;
             padding: 20px;
             text-align: center;
@@ -47,13 +47,13 @@
         }
         .nav-item:hover {
             background: #f0f0f0;
-            color: #ff6b6b;
+            color: #e74c3c;
             transform: translateY(-2px);
         }
         .nav-item.active {
-            background: linear-gradient(90deg, #ff6b6b, #feca57);
+            background: linear-gradient(90deg, #e74c3c, #f39c12);
             color: white;
-            box-shadow: 0 3px 10px rgba(255, 107, 107, 0.3);
+            box-shadow: 0 3px 10px rgba(231, 76, 60, 0.3);
         }
 
         /* ===== CONTENEDOR PRINCIPAL ===== */
@@ -84,7 +84,7 @@
             box-shadow: 0 8px 25px rgba(0,0,0,0.15);
         }
         .card h2 {
-            color: #ff6b6b;
+            color: #e74c3c;
             text-align: center;
             margin-bottom: 25px;
             font-size: 22px;
@@ -150,7 +150,7 @@
             margin-top: 15px;
         }
         th {
-            background: linear-gradient(90deg, #ff6b6b, #feca57);
+            background: linear-gradient(90deg, #e74c3c, #f39c12);
             color: white;
             padding: 14px 10px;
             text-align: center;
@@ -232,7 +232,7 @@
             border-bottom: 1px dashed #ddd;
         }
         .caja-info strong {
-            color: #ff6b6b;
+            color: #e74c3c;
             display: inline-block;
             width: 200px;
         }
@@ -259,7 +259,7 @@
                 <h2>🛒 Nueva Venta</h2>
                 <div class="btn-row">
                     <button class="btn-red" onclick="limpiarCarrito()">🗑️ Limpiar Venta</button>
-                    <button class="btn-primary" onclick="realizarVenta()">✅ Cobrar Venta</button>
+                    <button class="btn-orange" onclick="realizarVenta()">✅ Cobrar Venta</button>
                 </div>
 
                 <table>
@@ -374,16 +374,21 @@
         });
         actualizarTotalesCaja();
 
-        // ===== CAMBIAR PÁGINA =====
+        // ===== CAMBIAR PÁGINA - ¡ESTA ERA LA FUNCIÓN QUE FALTABA! =====
         function cambiarPagina(nombre) {
+            // Quitar clase activa de todos los botones del menú
             document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            // Poner clase activa al botón seleccionado
             document.querySelector(`[data-page="${nombre}"]`).classList.add('active');
+            // Ocultar todas las páginas
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            // Mostrar la página seleccionada
             document.getElementById(nombre).classList.add('active');
+            // Si vamos al catálogo, mostrar los productos
             if (nombre === 'catalogo') mostrarProductos();
         }
 
-        // ===== AGREGAR PRODUCTO =====
+        // ===== AGREGAR PRODUCTO AL CATÁLOGO =====
         function agregarProducto() {
             const clave = prompt('🔑 Clave del producto:');
             if (!clave) return;
@@ -415,10 +420,4 @@
             productos.forEach((p, i) => {
                 tbody.innerHTML += `
                     <tr>
-                        <td><strong>${p.clave}</strong></td>
-                        <td>${p.descripcion}</td>
-                        <td>$${p.precio.toFixed(2)}</td>
-                        <td>${p.existencia}</td>
-                        <td>
-                            <button class="btn-primary btn-sm" onclick="agregarAVenta(${i})">Vender</button>
-                            <button class="btn-red btn-sm
+                        <
