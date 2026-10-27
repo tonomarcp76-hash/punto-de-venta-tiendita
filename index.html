@@ -6,12 +6,12 @@
     <title>Mi Tiendita - POS</title>
     <style>
         *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
-        body{background:#f0f4f8;padding:20px;}
+        body{background:#f0f4f8;padding:20px;max-width:1000px;margin:0 auto;}
         h1{text-align:center;background:#2c3e50;color:white;padding:20px;border-radius:8px;margin-bottom:20px;}
         
         .menu{display:flex;justify-content:center;gap:10px;margin-bottom:20px;flex-wrap:wrap;}
-        .btn-menu{padding:12px 25px;border:none;border-radius:6px;font-size:16px;cursor:pointer;background:#3498db;color:white;}
-        .btn-menu.activo{background:#27ae60;}
+        .btn-menu{padding:12px 25px;border:none;border-radius:6px;font-size:16px;cursor:pointer;background:#3498db;color:white;transition:all 0.2s;}
+        .btn-menu.activo{background:#27ae60;transform:scale(1.05);}
         .btn-menu:hover{opacity:0.9;}
         
         .pagina{display:none;background:white;padding:25px;border-radius:8px;box-shadow:0 2px 8px #0002;}
@@ -37,9 +37,9 @@
     <h1>🛒 MI TIENDITA</h1>
 
     <div class="menu">
-        <button class="btn-menu activo" onclick="mostrarPagina('ventas')">Nueva Venta</button>
-        <button class="btn-menu" onclick="mostrarPagina('productos')">Productos</button>
-        <button class="btn-menu" onclick="mostrarPagina('caja')">Caja</button>
+        <button class="btn-menu activo" id="btn-ventas" onclick="mostrarPagina('ventas')">Nueva Venta</button>
+        <button class="btn-menu" id="btn-productos" onclick="mostrarPagina('productos')">Productos</button>
+        <button class="btn-menu" id="btn-caja" onclick="mostrarPagina('caja')">Caja</button>
     </div>
 
     <!-- ====== PÁGINA VENTAS ====== -->
@@ -95,11 +95,14 @@ document.getElementById('fecha').textContent = new Date().toLocaleDateString('es
 actualizarCaja();
 actualizarTablaProductos();
 
-// CAMBIAR PÁGINA
+// ✅ FUNCIÓN CORREGIDA PARA CAMBIAR DE PÁGINA
 function mostrarPagina(nombre){
-    document.querySelectorAll('.btn-menu').forEach(b=>b.classList.remove('activo'));
-    document.querySelectorAll('.pagina').forEach(p=>p.classList.remove('activa'));
-    event.target.classList.add('activo');
+    // Quitar activo de todos los botones
+    document.querySelectorAll('.btn-menu').forEach(boton => boton.classList.remove('activo'));
+    // Ocultar todas las páginas
+    document.querySelectorAll('.pagina').forEach(pagina => pagina.classList.remove('activa'));
+    // Activar el botón y la página seleccionada
+    document.getElementById('btn-' + nombre).classList.add('activo');
     document.getElementById(nombre).classList.add('activa');
 }
 
@@ -146,7 +149,7 @@ function borrarProducto(i){
 
 // AGREGAR A VENTA
 function agregarItem(){
-    if(productos.length===0){alert('Primero agrega productos');return;}
+    if(productos.length===0){alert('Primero agrega productos en la pestaña Productos');return;}
     let lista = productos.map((p,i)=>`${i+1}. ${p.nombre} - $${p.precio.toFixed(2)}`).join('\n');
     let opcion = parseInt(prompt('Elige el número del producto:\n\n'+lista))-1;
     if(isNaN(opcion)||opcion<0||opcion>=productos.length) return;
@@ -190,7 +193,7 @@ function limpiarVenta(){
 }
 
 function cobrar(){
-    if(carrito.length===0){alert('No hay productos');return;}
+    if(carrito.length===0){alert('No hay productos en la venta');return;}
     let total = carrito.reduce((sum,i)=>sum + i.cantidad*i.precio,0);
     if(confirm(`Total a pagar: $${total.toFixed(2)}\n\n¿Venta cobrada?`)){
         totalCaja += total;
@@ -209,11 +212,11 @@ function actualizarCaja(){
 }
 
 function cerrarCaja(){
-    if(confirm('¿Reiniciar caja del día?')){
+    if(confirm('¿Reiniciar caja del día? Se perderá el total acumulado.')){
         totalCaja=0;
         cantidadVentas=0;
-        localStorage.setItem('totalCaja',0);
-        localStorage.setItem('cantidadVentas',0);
+        localStorage.setItem('totalCaja','0');
+        localStorage.setItem('cantidadVentas','0');
         actualizarCaja();
     }
 }
