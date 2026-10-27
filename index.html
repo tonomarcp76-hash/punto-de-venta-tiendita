@@ -1,1 +1,300 @@
-
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Punto de Venta - Tiendita</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            background-color: #f5f6f8;
+        }
+        .header {
+            background-color: #1564c0;
+            color: white;
+            padding: 12px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 22px;
+            font-weight: bold;
+        }
+        .user-area {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 15px;
+            font-weight: normal;
+        }
+        .btn-logout {
+            background-color: #e63946;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .btn-logout:hover {
+            background-color: #c1121f;
+        }
+        .nav-bar {
+            background-color: white;
+            border-bottom: 1px solid #ddd;
+            padding: 10px 25px;
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        .nav-item {
+            padding: 8px 12px;
+            cursor: pointer;
+            color: #555;
+            border-bottom: 3px solid transparent;
+        }
+        .nav-item.active {
+            border-bottom: 3px solid #1564c0;
+            color: #1564c0;
+            font-weight: bold;
+        }
+        .container {
+            padding: 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .btn {
+            padding: 10px 18px;
+            border: none;
+            border-radius: 4px;
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+        .btn-blue { background-color: #2563eb; }
+        .btn-blue:hover { background-color: #1d4ed8; }
+        .btn-orange { background-color: #f97316; }
+        .btn-orange:hover { background-color: #ea580c; }
+        .btn-red { background-color: #dc2626; }
+        .btn-red:hover { background-color: #b91c1c; }
+        .btn-dark { background-color: #374151; }
+        .btn-dark:hover { background-color: #1f2937; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        th, td {
+            padding: 14px 12px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        th {
+            background-color: #f8fafc;
+            font-weight: bold;
+            color: #334155;
+            font-size: 14px;
+        }
+        .empty-row {
+            text-align: center;
+            padding: 40px;
+            color: #94a3b8;
+        }
+        .content-wrapper {
+            display: flex;
+            gap: 25px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+        .payment-section, .summary-section {
+            background-color: white;
+            padding: 20px;
+            border-radius: 6px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .payment-section { flex: 1; min-width: 300px; }
+        .summary-section { width: 320px; }
+        h3 {
+            margin-bottom: 15px;
+            color: #334155;
+            font-size: 16px;
+        }
+        .payment-options {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .pay-option {
+            border: 2px solid #ddd;
+            padding: 12px 25px;
+            border-radius: 6px;
+            cursor: pointer;
+            text-align: center;
+            width: 120px;
+        }
+        .pay-option.selected {
+            border-color: #2563eb;
+            background-color: #eff6ff;
+            color: #1d4ed8;
+            font-weight: bold;
+        }
+        .pay-option span {
+            display: block;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            font-size: 14px;
+        }
+        .total-row {
+            font-size: 22px;
+            font-weight: bold;
+            color: #16a34a;
+            border-top: 1px solid #eee;
+            margin-top: 10px;
+            padding-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <span>PUNTO DE VENTA</span>
+        <div class="user-area">
+            <span>Usuario</span>
+            <button class="btn-logout">Salir</button>
+        </div>
+    </div>
+    <div class="nav-bar">
+        <div class="nav-item active">VENTAS</div>
+        <div class="nav-item">CATÁLOGO</div>
+        <div class="nav-item">COMPRAS</div>
+        <div class="nav-item">REPORTES</div>
+        <div class="nav-item">CIERRE DE CAJA</div>
+    </div>
+    <div class="container">
+        <div class="toolbar">
+            <button class="btn btn-blue" onclick="agregarArticulo()">➕ Agregar Artículo</button>
+            <button class="btn btn-orange" onclick="buscarArticulo()">🔍 Buscar</button>
+            <button class="btn btn-red" onclick="eliminarSeleccionado()">🗑️ Eliminar Seleccionado</button>
+            <button class="btn btn-dark" onclick="nuevaVenta()">🧾 Nueva Venta</button>
+        </div>
+        <table id="tablaVentas">
+            <thead>
+                <tr>
+                    <th><input type="checkbox" id="checkAll"></th>
+                    <th>CANT.</th>
+                    <th>CLAVE</th>
+                    <th>DESCRIPCIÓN</th>
+                    <th>PRECIO</th>
+                    <th>IMPORTE</th>
+                </tr>
+            </thead>
+            <tbody id="listaArticulos">
+                <tr>
+                    <td colspan="6" class="empty-row">Agrega productos para iniciar la venta</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="content-wrapper">
+            <div class="payment-section">
+                <h3>💳 Forma de Pago</h3>
+                <div class="payment-options">
+                    <div class="pay-option selected" id="pagoEfectivo" onclick="seleccionarPago('efectivo')">
+                        💵<span>Efectivo</span>
+                    </div>
+                    <div class="pay-option" id="pagoTransf" onclick="seleccionarPago('transf')">
+                        🏦<span>Transferencia</span>
+                    </div>
+                </div>
+            </div>
+            <div class="summary-section">
+                <h3>Resumen de Venta</h3>
+                <div class="summary-row"><span>Subtotal:</span><span id="subtotal">$0.00</span></div>
+                <div class="summary-row"><span>Descuento Manual:</span><span id="descuento">$0.00</span></div>
+                <div class="summary-row total-row"><span>TOTAL:</span><span id="total">$0.00</span></div>
+            </div>
+        </div>
+    </div>
+    <script>
+        let carrito = [];
+        let formaPago = 'efectivo';
+        function seleccionarPago(tipo) {
+            document.getElementById('pagoEfectivo').classList.remove('selected');
+            document.getElementById('pagoTransf').classList.remove('selected');
+            formaPago = tipo;
+            if (tipo === 'efectivo') document.getElementById('pagoEfectivo').classList.add('selected');
+            else document.getElementById('pagoTransf').classList.add('selected');
+        }
+        function agregarArticulo() {
+            const clave = prompt("Clave del producto:");
+            if (!clave) return;
+            const descripcion = prompt("Descripción:");
+            const precio = parseFloat(prompt("Precio: $"));
+            const cantidad = parseInt(prompt("Cantidad:"));
+            if (descripcion && precio && cantidad) {
+                const importe = precio * cantidad;
+                carrito.push({ clave, descripcion, precio, cantidad, importe });
+                actualizarTabla();
+                actualizarTotal();
+            }
+        }
+        function buscarArticulo() {
+            prompt("Buscar producto por nombre o clave...");
+        }
+        function eliminarSeleccionado() {
+            if (carrito.length === 0) { alert("No hay artículos en la venta"); return; }
+            if (confirm("¿Vaciar todo el carrito?")) {
+                carrito = [];
+                actualizarTabla();
+                actualizarTotal();
+            }
+        }
+        function nuevaVenta() {
+            if (carrito.length === 0) { alert("Agrega productos primero"); return; }
+            alert("¡Venta registrada! 🧾\nTotal: " + document.getElementById('total').textContent);
+            carrito = [];
+            actualizarTabla();
+            actualizarTotal();
+        }
+        function actualizarTabla() {
+            const tbody = document.getElementById('listaArticulos');
+            if (carrito.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" class="empty-row">Agrega productos para iniciar la venta</td></tr>';
+                return;
+            }
+            tbody.innerHTML = '';
+            carrito.forEach(item => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td>${item.cantidad}</td>
+                        <td>${item.clave}</td>
+                        <td>${item.descripcion}</td>
+                        <td>$${item.precio.toFixed(2)}</td>
+                        <td>$${item.importe.toFixed(2)}</td>
+                    </tr>
+                `;
+            });
+        }
+        function actualizarTotal() {
+            let subtotal = carrito.reduce((sum, i) => sum + i.importe, 0);
+            document.getElementById('subtotal').textContent = '$' + subtotal.toFixed(2);
+            document.getElementById('descuento').textContent = '$0.00';
+            document.getElementById('total').textContent = '$' + subtotal.toFixed(2);
+        }
+    </script>
+</body>
+</html>
