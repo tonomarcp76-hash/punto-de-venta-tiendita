@@ -11,9 +11,7 @@
             box-sizing: border-box;
             font-family: Arial, sans-serif;
         }
-        body {
-            background-color: #f5f6f8;
-        }
+        body { background-color: #f5f6f8; }
         .header {
             background-color: #1564c0;
             color: white;
@@ -40,9 +38,7 @@
             cursor: pointer;
             font-weight: bold;
         }
-        .btn-logout:hover {
-            background-color: #c1121f;
-        }
+        .btn-logout:hover { background-color: #c1121f; }
         .nav-bar {
             background-color: white;
             border-bottom: 1px solid #ddd;
@@ -67,6 +63,8 @@
             max-width: 1200px;
             margin: 0 auto;
         }
+        .page { display: none; }
+        .page.active { display: block; }
         .btn {
             padding: 10px 18px;
             border: none;
@@ -167,6 +165,13 @@
             margin-top: 10px;
             padding-top: 15px;
         }
+        .contenido-pagina {
+            background: white;
+            padding: 30px;
+            border-radius: 6px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -177,58 +182,138 @@
             <button class="btn-logout">Salir</button>
         </div>
     </div>
+
     <div class="nav-bar">
-        <div class="nav-item active">VENTAS</div>
-        <div class="nav-item">CATÁLOGO</div>
-        <div class="nav-item">COMPRAS</div>
-        <div class="nav-item">REPORTES</div>
-        <div class="nav-item">CIERRE DE CAJA</div>
+        <div class="nav-item active" data-page="ventas" onclick="cambiarPagina('ventas')">VENTAS</div>
+        <div class="nav-item" data-page="catalogo" onclick="cambiarPagina('catalogo')">CATÁLOGO</div>
+        <div class="nav-item" data-page="compras" onclick="cambiarPagina('compras')">COMPRAS</div>
+        <div class="nav-item" data-page="reportes" onclick="cambiarPagina('reportes')">REPORTES</div>
+        <div class="nav-item" data-page="cierre" onclick="cambiarPagina('cierre')">CIERRE DE CAJA</div>
     </div>
+
     <div class="container">
-        <div class="toolbar">
-            <button class="btn btn-blue" onclick="agregarArticulo()">➕ Agregar Artículo</button>
-            <button class="btn btn-orange" onclick="buscarArticulo()">🔍 Buscar</button>
-            <button class="btn btn-red" onclick="eliminarSeleccionado()">🗑️ Eliminar Seleccionado</button>
-            <button class="btn btn-dark" onclick="nuevaVenta()">🧾 Nueva Venta</button>
-        </div>
-        <table id="tablaVentas">
-            <thead>
-                <tr>
-                    <th><input type="checkbox" id="checkAll"></th>
-                    <th>CANT.</th>
-                    <th>CLAVE</th>
-                    <th>DESCRIPCIÓN</th>
-                    <th>PRECIO</th>
-                    <th>IMPORTE</th>
-                </tr>
-            </thead>
-            <tbody id="listaArticulos">
-                <tr>
-                    <td colspan="6" class="empty-row">Agrega productos para iniciar la venta</td>
-                </tr>
-            </tbody>
-        </table>
-        <div class="content-wrapper">
-            <div class="payment-section">
-                <h3>💳 Forma de Pago</h3>
-                <div class="payment-options">
-                    <div class="pay-option selected" id="pagoEfectivo" onclick="seleccionarPago('efectivo')">
-                        💵<span>Efectivo</span>
-                    </div>
-                    <div class="pay-option" id="pagoTransf" onclick="seleccionarPago('transf')">
-                        🏦<span>Transferencia</span>
+        <!-- PÁGINA VENTAS -->
+        <div id="ventas" class="page active">
+            <div class="toolbar">
+                <button class="btn btn-blue" onclick="agregarArticulo()">➕ Agregar Artículo</button>
+                <button class="btn btn-orange" onclick="buscarArticulo()">🔍 Buscar</button>
+                <button class="btn btn-red" onclick="eliminarSeleccionado()">🗑️ Eliminar Seleccionado</button>
+                <button class="btn btn-dark" onclick="nuevaVenta()">🧾 Nueva Venta</button>
+            </div>
+            <table id="tablaVentas">
+                <thead>
+                    <tr>
+                        <th><input type="checkbox" id="checkAll"></th>
+                        <th>CANT.</th>
+                        <th>CLAVE</th>
+                        <th>DESCRIPCIÓN</th>
+                        <th>PRECIO</th>
+                        <th>IMPORTE</th>
+                    </tr>
+                </thead>
+                <tbody id="listaArticulos">
+                    <tr><td colspan="6" class="empty-row">Agrega productos para iniciar la venta</td></tr>
+                </tbody>
+            </table>
+            <div class="content-wrapper">
+                <div class="payment-section">
+                    <h3>💳 Forma de Pago</h3>
+                    <div class="payment-options">
+                        <div class="pay-option selected" id="pagoEfectivo" onclick="seleccionarPago('efectivo')">
+                            💵<span>Efectivo</span>
+                        </div>
+                        <div class="pay-option" id="pagoTransf" onclick="seleccionarPago('transf')">
+                            🏦<span>Transferencia</span>
+                        </div>
                     </div>
                 </div>
+                <div class="summary-section">
+                    <h3>Resumen de Venta</h3>
+                    <div class="summary-row"><span>Subtotal:</span><span id="subtotal">$0.00</span></div>
+                    <div class="summary-row"><span>Descuento Manual:</span><span id="descuento">$0.00</span></div>
+                    <div class="summary-row total-row"><span>TOTAL:</span><span id="total">$0.00</span></div>
+                </div>
             </div>
-            <div class="summary-section">
-                <h3>Resumen de Venta</h3>
-                <div class="summary-row"><span>Subtotal:</span><span id="subtotal">$0.00</span></div>
-                <div class="summary-row"><span>Descuento Manual:</span><span id="descuento">$0.00</span></div>
-                <div class="summary-row total-row"><span>TOTAL:</span><span id="total">$0.00</span></div>
+        </div>
+
+        <!-- PÁGINA CATÁLOGO -->
+        <div id="catalogo" class="page">
+            <div class="contenido-pagina">
+                <h2>📦 Catálogo de Productos</h2>
+                <br>
+                <button class="btn btn-blue">➕ Agregar Nuevo Producto</button>
+                <br><br>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Clave</th>
+                            <th>Descripción</th>
+                            <th>Precio</th>
+                            <th>Existencia</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td colspan="5" class="empty-row">No hay productos registrados</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- PÁGINA COMPRAS -->
+        <div id="compras" class="page">
+            <div class="contenido-pagina">
+                <h2>🛒 Compras a Proveedores</h2>
+                <br>
+                <button class="btn btn-blue">➕ Nueva Compra</button>
+                <br><br>
+                <p>Registra aquí tus compras de inventario.</p>
+            </div>
+        </div>
+
+        <!-- PÁGINA REPORTES -->
+        <div id="reportes" class="page">
+            <div class="contenido-pagina">
+                <h2>📊 Reportes</h2>
+                <br>
+                <button class="btn btn-blue">📈 Reporte de Ventas</button>
+                <button class="btn btn-orange">📉 Reporte de Inventario</button>
+                <button class="btn btn-dark">📑 Reporte de Compras</button>
+                <br><br>
+                <p>Selecciona el reporte que deseas consultar.</p>
+            </div>
+        </div>
+
+        <!-- PÁGINA CIERRE DE CAJA -->
+        <div id="cierre" class="page">
+            <div class="contenido-pagina">
+                <h2>💰 Cierre de Caja</h2>
+                <br>
+                <p><strong>Fecha:</strong> <span id="fechaHoy"></span></p>
+                <p><strong>Saldo Inicial:</strong> $0.00</p>
+                <p><strong>Ventas del Día:</strong> $0.00</p>
+                <p><strong>Saldo Final:</strong> $0.00</p>
+                <br>
+                <button class="btn btn-red">🔒 Realizar Cierre de Caja</button>
             </div>
         </div>
     </div>
+
     <script>
+        // Función para cambiar de pestaña
+        function cambiarPagina(nombrePagina) {
+            // Quitar clase activa a todos los menús
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            // Poner activo al seleccionado
+            document.querySelector(`[data-page="${nombrePagina}"]`).classList.add('active');
+            
+            // Ocultar todas las páginas
+            document.querySelectorAll('.page').forEach(pagina => pagina.classList.remove('active'));
+            // Mostrar la página seleccionada
+            document.getElementById(nombrePagina).classList.add('active');
+        }
+
+        // Funciones de Ventas
         let carrito = [];
         let formaPago = 'efectivo';
         function seleccionarPago(tipo) {
@@ -251,12 +336,10 @@
                 actualizarTotal();
             }
         }
-        function buscarArticulo() {
-            prompt("Buscar producto por nombre o clave...");
-        }
+        function buscarArticulo() { prompt("Buscar producto..."); }
         function eliminarSeleccionado() {
-            if (carrito.length === 0) { alert("No hay artículos en la venta"); return; }
-            if (confirm("¿Vaciar todo el carrito?")) {
+            if (carrito.length === 0) { alert("No hay artículos"); return; }
+            if (confirm("¿Vaciar carrito?")) {
                 carrito = [];
                 actualizarTabla();
                 actualizarTotal();
@@ -264,7 +347,7 @@
         }
         function nuevaVenta() {
             if (carrito.length === 0) { alert("Agrega productos primero"); return; }
-            alert("¡Venta registrada! 🧾\nTotal: " + document.getElementById('total').textContent);
+            alert("¡Venta registrada! 🧾 Total: " + document.getElementById('total').textContent);
             carrito = [];
             actualizarTabla();
             actualizarTotal();
@@ -295,6 +378,9 @@
             document.getElementById('descuento').textContent = '$0.00';
             document.getElementById('total').textContent = '$' + subtotal.toFixed(2);
         }
+
+        // Fecha actual para cierre de caja
+        document.getElementById('fechaHoy').textContent = new Date().toLocaleDateString('es-MX');
     </script>
 </body>
 </html>
