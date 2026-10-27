@@ -270,6 +270,8 @@
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
             margin-top: 20px;
         }
+        .btn-sm-red { background-color: #ef4444; }
+        .btn-sm-red:hover { background-color: #dc2626; }
     </style>
 </head>
 <body>
@@ -389,10 +391,20 @@
             <div id="catalogo" class="page">
                 <div class="contenido-pagina">
                     <h2>📦 Catálogo de Productos</h2><br>
-                    <button class="btn-small btn-blue">➕ Agregar Nuevo Producto</button><br><br>
-                    <table>
-                        <thead><tr><th>Clave</th><th>Descripción</th><th>Precio</th><th>Existencia</th><th>Acciones</th></tr></thead>
-                        <tbody><tr><td colspan="5" class="empty-row">No hay productos registrados</td></tr></tbody>
+                    <button class="btn-small btn-blue" onclick="agregarProductoCatalogo()">➕ Agregar Nuevo Producto</button><br><br>
+                    <table id="tablaCatalogo">
+                        <thead>
+                            <tr>
+                                <th>Clave</th>
+                                <th>Descripción</th>
+                                <th>Precio</th>
+                                <th>Existencia</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="listaProductos">
+                            <tr><td colspan="5" class="empty-row">No hay productos registrados</td></tr>
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -409,14 +421,4 @@
             <!-- REPORTES -->
             <div id="reportes" class="page">
                 <div class="contenido-pagina">
-                    <h2>📊 Reportes</h2><br>
-                    <button class="btn-small btn-blue">📈 Reporte de Ventas</button>
-                    <button class="btn-small btn-orange">📉 Reporte de Inventario</button>
-                    <button class="btn-small btn-dark">📑 Reporte de Compras</button><br><br>
-                    <p>Selecciona el reporte que deseas consultar.</p>
-                </div>
-            </div>
-
-            <!-- CIERRE DE CAJA -->
-            <div id="cierre" class="page">
-                <div class="
+                    <h2>📊 Reportes</h2><
